@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Tính Thời Gian Tác Vụ</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #555;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+
+        /* Khung 1: Tính giờ */
+        .timer-display {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            font-family: monospace;
+            color: var(--primary-color);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #btnStart {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        #btnStart:hover { background-color: #27ae60; }
+        #btnStart:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+
+        #btnEnd {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        #btnEnd:hover { background-color: #c0392b; }
+        #btnEnd:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+
+        .result-message {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* Khung 2: Lịch sử */
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.9rem;
+        }
+
+        .history-item:last-child { border: none; }
+        .no-data { color: #aaa; text-align: center; font-style: italic; }
+
+        /* Khung 3: Tổng thời gian */
+        .total-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h2>⏱️ Bấm Giờ (タイマー)</h2>
+            <div class="timer-display" id="liveTimer">00:00:00</div>
+            <div class="btn-group">
+                <button id="btnStart" onclick="startTimer()">開始 (Bắt đầu)</button>
+                <button id="btnEnd" onclick="endTimer()" disabled>終了 (Kết thúc)</button>
+            </div>
+            <div class="result-message" id="resultMessage"></div>
+        </div>
+
+        <div class="card">
+            <h2>📜 Lịch Sử (履歴)</h2>
+            <div class="history-list" id="historyList">
+                <div class="no-data">Chưa có dữ liệu bấm giờ.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📊 Tổng Thời Gian (合計)</h2>
+            <div class="total-display" id="totalDisplay">00 giờ 00 phút 00 giây</div>
+        </div>
+    </div>
+
+    <script>
+        let startTime = null;
+        let timerInterval = null;
+        let totalSeconds = 0;
+        let sessionCount = 0;
+
+        const liveTimerIndex = document.getElementById('liveTimer');
+        const btnStart = document.getElementById('btnStart');
+        const btnEnd = document.getElementById('btnEnd');
+        const resultMessage = document.getElementById('resultMessage');
+        const historyList = document.getElementById('historyList');
+        const totalDisplay = document.getElementById('totalDisplay');
+
+        // Hàm định dạng giây thành dạng hh:mm:ss
+        function formatTime(totalSecs) {
+            const hrs = Math.floor(totalSecs / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((totalSecs % 3600) / 60).toString().padStart(2, '0');
+            const secs = (totalSecs % 60).toString().padStart(2, '0');
+            return `${hrs}:${mins}:${secs}`;
+        }
+
+        // Hàm định dạng tiếng Việt cho tổng thời gian
+        function formatTotalTime(totalSecs) {
+            const hrs = Math.floor(totalSecs / 3600);
+            const mins = Math.floor((totalSecs % 3600) / 60);
+            const secs = totalSecs % 60;
+            return `${hrs} giờ ${mins} phút ${secs} giây`;
+        }
+
+        // Nút 開始 (Bắt đầu)
+        function startTimer() {
+            startTime = new Date();
+            btnStart.disabled = true;
+            btnEnd.disabled = false;
+            resultMessage.innerText = "Đang tính giờ...";
+
+            // Chạy đồng hồ hiển thị trực tiếp thời gian trôi qua
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const diffInSeconds = Math.floor((now - startTime) / 1000);
+                liveTimerIndex.innerText = formatTime(diffInSeconds);
+            }, 1000);
+        }
+
+        // Nút 終了 (Kết thúc)
+        function endTimer() {
+            if (!startTime) return;
+
+            clearInterval(timerInterval);
+            const endTime = new Date();
+            const diffInSeconds = Math.floor((endTime - startTime) / 1000);
+            
+            // Cập nhật trạng thái nút
+            btnStart.disabled = false;
+            btnEnd.disabled = true;
+
+            // Hiển thị kết quả lần bấm vừa rồi
+            const timeString = formatTime(diffInSeconds);
+            liveTimerIndex.innerText = "00:00:00";
+            resultMessage.innerHTML = `Vừa hoàn thành: <span style="color:var(--danger-color)">${timeString}</span>`;
+
+            // Cập nhật Khung 3: Tổng thời gian
+            totalSeconds += diffInSeconds;
+            totalDisplay.innerText = formatTotalTime(totalSeconds);
+
+            // Cập nhật Khung 2: Lịch sử
+            sessionCount++;
+            if (sessionCount === 1) {
+                historyList.innerHTML = ''; // Xóa dòng "Chưa có dữ liệu" khi có lần bấm đầu tiên
+            }
+
+            const timeStartStr = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const timeEndStr = endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            historyItem.innerHTML = `
+                <span>Lần ${sessionCount} (${timeStartStr} ➔ ${timeEndStr})</span>
+                <strong>+ ${timeString}</strong>
+            `;
+            // Chèn lịch sử mới lên đầu danh sách
+            historyList.insertBefore(historyItem, historyList.firstChild);
+
+            // Reset thời gian bắt đầu
+            startTime = null;
+        }
+    </script>
+</body>
+</html>
