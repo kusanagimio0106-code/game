@@ -1,244 +1,292 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ứng dụng Tính Thời Gian Tác Vụ</title>
-    
-    <link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAIBAQEBAQIBAQECAgICAgQDAgICAgUEBAMEBgUGBgYFBgYGBwkIBgcJBwYGCAsICQoKCgoKBggLDAsKDAkKCgr/2wBDAQICAgICAgUDAwUKBwYHCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgr/wAARCAQABAADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/9oADAMBAAIRAxEAP0D+HfwuufHFyk9xbyLpwkCz3Ebcwkq5Vio5Iyn6V9E+FPgV8MNIuW8NyeF7rU7O5/0a51S/8SWsc96GjVfKkiYgRLu3ncCrcLzzVf4O/DjU9YubLwtoGv2fhi0ut32zULyP7RG6Kjuu5CMMxZAB0HNfUPhb9nnSbe6j0O11fR00W62iZ9CgaGe6PlqPMkc7gzhgx9gR9K/X8wzmhhYvU/XMFgK+IabWh5X8PPgl4f0Pwt4V0fw94T87Xo7G1gvdQs7i3muPPCIDK0UbhwAwb5sY4PFe/fCH9nPwPrlpdab8UNf/sy2uDvsbyPXLWI2iKjh43R3UklscgEjbXrHgL4O6P4ZsrPRtM1bSRo1pt85dEgaGa6CxgedJIcsHLAnuDxXe+CPgloniKzj1bUNZ0ePRbvAtW0WNoZbUJG2Y3Y7gzBi3IAPAr87zLOa+Kk9T9Cy7K6GGim1qeOfD39mjS9M8H+FtG8NfE7+0LhLK1gvb/Tr+1mXUFCIGkSNX3gsUbDAbRnmvbPhR8AfAsVne6R8XfHP/CRWNxG1nY2s2r21sbGNUMTRr5bISwD87uTj2rr/AfwC0TRrCHStQ1zSP7Gs2U2g0SFopp0SMK6SSHLBywPGeQcV3HgX4GaToVkmkahrejtottIhsF0WFoZbcJEwfe7FiWLkHgA18xjMxr1fdfU+uwuXUKXvWPCfh7+yrpcHgnwtoPhv4o/btSW0tbK+v8AT9RtZV1JEVA0kaBy+WMbAbRwDzXs3wj/AGefAsVpe6V8X/HH/CVWVyjWNnZzavb2osYljETRrskQtujbnccjHrmuv8A/AjSdBsofD+oa5o82jWZRtOfRInhmtwkZSR3fczBmYtyMYNdl4F+Bej6FYQaFfa3pE+kWUqNpg0WJoZrdFjKySO7EszNuycYzXzuNzGvVXLc+gw2X0KL5rHhfgb9lTTH8HeGdA8N/FD+0NSS1tbS+1Cw1K1mXUEVFDyIivvO6NmAUgEAnmvY/hL+zz4FgtrvSvjB44/4Sy0uFNlZWl3q1vbLZRJGImRVSVSd8bbSTnjvmus8A/AnTNBtodCvtZ0i40qykRtKbRUeG4gVYyskjOWZmZtzHjFdp4E+Bul6FaQaFfa3pFxpNjIjaT/YsLwz26pGVkkaRixYuzE9Bg18/jcxrzvHsfQYbL6MfePCfCP7Kek/8ACFeGdC8OfFD7fqKWttZ3+pafqNrMmoRoigvGivvy0bEBSDwTxXs3wn/Z68BW8F3pXxd8df8ACWWVwn2OxsrvV7e2FlEEYSRKqSKTvjbGc8eua67wD8DdN0S3g0W91fSJ9IsZEbSv7IjeG4gVI2SV3ZiwYuWPTBrtvAngPTo7NfC872Eui2KCOwks5m86WNUAkdmbDAbwOByDXz+NzGvVTjc9/DYChTXMeK+G/wBlPSf+EP8ADGheHPil9v1FLW1tb7UrHUbWZL+NUAfYivvO6MkBSDwTn2r2P4Wfs+fD+2gu9L+LXj3/AISqwuY/stlZXer29stnGgEiKqJIDvjcZyeR2NdP4D+GOm6Tax+F5msJNDsfLj02eznYTzIqAOWIwwKvgcEHgV2vgn4beHtNtY/DN0theeHrPyxpV1azv9phWNCZmdsMCGQ7eDkmvncbmFepK3MfR4bAYeFpWPF/C/7Kejf8If4Y0Pw58Uft+ox2tral7K/tZlsIlQLmNFeTLo2QFIPAJ9q9i+Fn7Pvw8gju9K+LPjv/AISrTrmM2lnZXer29stnEgDIoEcgO9HXOccDoa6rwN8OdBs7RdBvDYN4Z08pHo1xazuLiFEQMHYnDAq+VByRgetdn4L+HvhrTraLwvePY3Hhew8r/RFndruFIoz5+8Ahipb0JOK+dxePrybUnofR4bAYaKTjGx4v4Z/ZV0b/hD/C+heHPij9v1OK1trYvb6haTNYxIgXmNXkZXRgAARyc4r2D4W/s//DmCO60v4sePD4q0yeI2lpaXur29qLOIArGu2OQEujrkscHA6Guo8EfDjw1pttF4clXT5/B+mhF0i4s7hzcRpEvnbiOGBRgAcscV1/gj4e+FtNhj8LySWM3g/TPK/su6tLpjcQiFfMbeOGC7gAMsc18/i8wrzbXQ+jwuAo0mppHjvhr9mDR5PDPhrQdB+Jw1C+gsreBrbTr+0mOnwqmxiiozusi5AG7nIz6V698Mv2fvAFvFd6V8V/HX/CU6VPCbSzsL3Vba1W0iUBo1CpIpeN0YAlvSux8D/DvwtpkEfhWSSxm8IaaIxo9xa3LGeFYk807gMNuVxgEsR611fgn4f8AhXTbePwzNJYzeFdPEbaTqVreObmAQLudtoYMXDDBJJHWvAxWPxE24tn0WFweHptSitTyHw/8AsvWUHhjwxofh74mm+u7azgtpLXT9Rtbg6fEI1K+XGshdWXGFDdMgmvWPhb8A/AEEN5pPxT8df8JNpc8f2OwsrrWbWBbWIANEoEcil0dDgliRgdeldj4L+H/hfTYU8LmSzk8K6eI20vVbS7b7TEIYy8rOBhgR6EnFdT4M+HvhbToIvDCyWcvhfTvLGmatbXbfaohChmdnAwylmHAJPGM14eLxVefutnvYPDYaGslqea6T+zAzeFfDOheH/id9vu7SytreW3stRtbg6fbiNVEkUayeYrAnavuR6V6X8KvgZ4AskvNJ+Knjz/AISPTp4vsGn2VzrFvAbWJFDxBTG6uHSThmJOOnXNdT4K+H/hnToeF/InhbT/AC203WLS7b7TEIYy8rMBhgR0By
-    <link rel="manifest" href="manifest.json">
-        <style>
-        :root {
-            --primary-color: #4a90e2;
-            --success-color: #2ecc71;
-            --danger-color: #e74c3c;
-            --bg-color: #f5f7fa;
-            --card-bg: #ffffff;
-            --text-color: #333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        h2 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            color: #555;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 5px;
-        }
-
-        /* Khung 1: Tính giờ */
-        .timer-display {
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-            margin: 15px 0;
-            font-family: monospace;
-            color: var(--primary-color);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            flex: 1;
-            padding: 12px;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        #btnStart {
-            background-color: var(--success-color);
-            color: white;
-        }
-
-        #btnStart:hover { background-color: #27ae60; }
-        #btnStart:disabled { background-color: #bdc3c7; cursor: not-allowed; }
-
-        #btnEnd {
-            background-color: var(--danger-color);
-            color: white;
-        }
-
-        #btnEnd:hover { background-color: #c0392b; }
-        #btnEnd:disabled { background-color: #bdc3c7; cursor: not-allowed; }
-
-        .result-message {
-            margin-top: 15px;
-            text-align: center;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        /* Khung 2: Lịch sử */
-        .history-list {
-            max-height: 200px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #eee;
-            font-size: 0.9rem;
-        }
-
-        .history-item:last-child { border: none; }
-        .no-data { color: #aaa; text-align: center; font-style: italic; }
-
-        /* Khung 3: Tổng thời gian */
-        .total-display {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-align: center;
-            color: #2c3e50;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#ff7043">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bắt Thú">
+<link rel="apple-touch-icon" id="apple-icon">
+<title>Bắt Thú Dễ Thương 🐱</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'Segoe UI', sans-serif; background: #fff9f0;
+    display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh; padding: 12px; touch-action: manipulation;
+  }
+  h1 { font-size: clamp(20px,5vw,28px); color: #e65100; margin-bottom: 10px; text-align: center; }
+  #score-bar { display: flex; gap: 16px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; justify-content: center; }
+  .stat { font-size: clamp(15px,4vw,20px); font-weight: 600; color: #333; }
+  .stat.best { color: #9c27b0; }
+  #timer-bar { width: 100%; max-width: 540px; height: 10px; background: #e0e0e0; border-radius: 5px; margin-bottom: 6px; overflow: hidden; }
+  #timer-fill { height: 100%; background: #66bb6a; border-radius: 5px; transition: width 0.2s linear; }
+  #msg { font-size: clamp(16px,4vw,22px); font-weight: 600; color: #e65100; min-height: 28px; text-align: center; margin-bottom: 6px; }
+  #game-area {
+    position: relative; width: 100%; max-width: 540px;
+    height: clamp(280px, 48vw, 380px);
+    background: linear-gradient(180deg, #b3e5fc 0%, #e0f7fa 60%, #c8e6c9 100%);
+    border-radius: 20px; border: 3px solid #81d4fa; overflow: hidden;
+    touch-action: none;
+  }
+  .cloud { position: absolute; font-size: 36px; opacity: 0.55; animation: drift linear infinite; }
+  @keyframes drift { from { transform: translateX(-70px); } to { transform: translateX(620px); } }
+  .animal { position: absolute; cursor: pointer; line-height: 1; animation: bounce ease-in-out infinite alternate; will-change: transform; }
+  .animal.size-normal { font-size: clamp(32px,7vw,44px); }
+  .animal.size-big    { font-size: clamp(46px,10vw,62px); }
+  .animal.poop { animation: wobble ease-in-out infinite alternate; }
+  @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+  @keyframes wobble { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
+  .pop { position: absolute; pointer-events: none; animation: pop 0.38s forwards; line-height: 1; }
+  .pop.size-normal { font-size: clamp(32px,7vw,44px); }
+  .pop.size-big    { font-size: clamp(46px,10vw,62px); }
+  @keyframes pop { 0%{transform:scale(1);opacity:1} 100%{transform:scale(2.6) translateY(-28px);opacity:0} }
+  .score-pop { position: absolute; font-size: 20px; font-weight: 700; pointer-events: none; animation: scoreFloat 0.8s forwards; white-space: nowrap; }
+  @keyframes scoreFloat { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(-50px);opacity:0} }
+  #overlay {
+    position: absolute; inset: 0; background: rgba(255,255,255,0.9);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border-radius: 18px; gap: 8px; padding: 16px; text-align: center;
+  }
+  #overlay .big { font-size: clamp(44px,10vw,64px); }
+  #overlay .title { font-size: clamp(18px,4.5vw,24px); font-weight: 700; color: #333; }
+  #overlay .sub { font-size: clamp(13px,3vw,15px); color: #666; }
+  #overlay .best-line { font-size: clamp(13px,3vw,15px); color: #9c27b0; font-weight: 600; }
+  #start-btn {
+    margin-top: 10px; font-size: clamp(16px,4vw,20px); padding: 12px 36px;
+    border-radius: 30px; border: none; background: #ff7043; color: white;
+    cursor: pointer; font-weight: 700; box-shadow: 0 4px 12px rgba(255,112,67,0.4);
+    transition: background 0.2s, transform 0.1s; touch-action: manipulation; -webkit-appearance: none;
+  }
+  #start-btn:active { transform: scale(0.96); background: #e64a19; }
+  #start-btn:disabled { background: #bbb; cursor: default; box-shadow: none; }
+  .grass { position: absolute; bottom: 0; left: 0; right: 0; height: 44px; background: #81c784; border-radius: 0 0 18px 18px; pointer-events: none; }
+  .deco { position: absolute; bottom: 36px; pointer-events: none; }
+  .star { font-size: 32px; letter-spacing: 4px; }
+</style>
 </head>
 <body>
+<h1>🌟 Bắt Thú Dễ Thương! 🌟</h1>
+<div id="score-bar">
+  <div class="stat">⭐ <span id="score">0</span></div>
+  <div class="stat">⏰ <span id="timer">30</span>s</div>
+  <div class="stat">🎯 Level <span id="level">1</span></div>
+  <div class="stat best">🏅 Kỷ lục: <span id="best">0</span></div>
+</div>
+<div id="timer-bar"><div id="timer-fill" style="width:100%"></div></div>
+<div id="msg"></div>
+<div id="game-area">
+  <div class="cloud" style="top:8px;animation-duration:9s;animation-delay:-2s">☁️</div>
+  <div class="cloud" style="top:26px;font-size:24px;animation-duration:14s;animation-delay:-7s">☁️</div>
+  <div class="grass"></div>
+  <div class="deco" style="left:8px">🌿</div>
+  <div class="deco" style="right:14px">🌵</div>
+  <div class="deco" style="left:44%">🌸</div>
+  <div id="overlay">
+    <div class="big">🐱🐶🐰</div>
+    <div class="title">Bắt Thú Dễ Thương!</div>
+    <div class="sub">Chạm vào thú để bắt 🌟<br>Tránh 💩 — bấm trúng bị trừ điểm!</div>
+    <div class="sub" style="margin-top:4px">🐱 nhỏ = +2 điểm &nbsp;|&nbsp; 🐱 to = +1 điểm</div>
+  </div>
+</div>
+<button id="start-btn" onclick="startGame()">▶ Bắt đầu chơi!</button>
 
-    <div class="container">
-        <div class="card">
-            <h2>⏱️ Bấm Giờ (タイマー)</h2>
-            <div class="timer-display" id="liveTimer">00:00:00</div>
-            <div class="btn-group">
-                <button id="btnStart" onclick="startTimer()">開始 (Bắt đầu)</button>
-                <button id="btnEnd" onclick="endTimer()" disabled>終了 (Kết thúc)</button>
-            </div>
-            <div class="result-message" id="resultMessage"></div>
-        </div>
+<script>
+// ── Generate icon via Canvas ──────────────────────────────────────────────
+(function generateIcon(){
+  const size = 512;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
 
-        <div class="card">
-            <h2>📜 Lịch Sử (履歴)</h2>
-            <div class="history-list" id="historyList">
-                <div class="no-data">Chưa có dữ liệu bấm giờ.</div>
-            </div>
-        </div>
+  // Background circle - orange gradient
+  const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  grad.addColorStop(0, '#ffcc02');
+  grad.addColorStop(1, '#ff7043');
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+  ctx.fillStyle = grad;
+  ctx.fill();
 
-        <div class="card">
-            <h2>📊 Tổng Thời Gian (合計)</h2>
-            <div class="total-display" id="totalDisplay">00 giờ 00 phút 00 giây</div>
-        </div>
-    </div>
+  // Emoji in center
+  ctx.font = '280px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🐱', size/2, size/2 + 10);
 
-    <script>
-        let startTime = null;
-        let timerInterval = null;
-        let totalSeconds = 0;
-        let sessionCount = 0;
+  // Small star top-right
+  ctx.font = '110px serif';
+  ctx.fillText('⭐', size*0.75, size*0.25);
 
-        const liveTimerIndex = document.getElementById('liveTimer');
-        const btnStart = document.getElementById('btnStart');
-        const btnEnd = document.getElementById('btnEnd');
-        const resultMessage = document.getElementById('resultMessage');
-        const historyList = document.getElementById('historyList');
-        const totalDisplay = document.getElementById('totalDisplay');
+  const dataUrl = c.toDataURL('image/png');
 
-        // Hàm định dạng giây thành dạng hh:mm:ss
-        function formatTime(totalSecs) {
-            const hrs = Math.floor(totalSecs / 3600).toString().padStart(2, '0');
-            const mins = Math.floor((totalSecs % 3600) / 60).toString().padStart(2, '0');
-            const secs = (totalSecs % 60).toString().padStart(2, '0');
-            return `${hrs}:${mins}:${secs}`;
-        }
+  // Apple touch icon
+  document.getElementById('apple-icon').href = dataUrl;
 
-        // Hàm định dạng tiếng Việt cho tổng thời gian
-        function formatTotalTime(totalSecs) {
-            const hrs = Math.floor(totalSecs / 3600);
-            const mins = Math.floor((totalSecs % 3600) / 60);
-            const secs = totalSecs % 60;
-            return `${hrs} giờ ${mins} phút ${secs} giây`;
-        }
+  // Inject manifest dynamically
+  const manifest = {
+    name: 'Bắt Thú Dễ Thương',
+    short_name: 'Bắt Thú',
+    description: 'Game bắt thú dễ thương cho bé!',
+    start_url: '.',
+    display: 'standalone',
+    background_color: '#fff9f0',
+    theme_color: '#ff7043',
+    orientation: 'portrait',
+    icons: [
+      { src: dataUrl, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+      { src: dataUrl, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const link = document.createElement('link');
+  link.rel = 'manifest'; link.href = url;
+  document.head.appendChild(link);
+})();
 
-        // Nút 開始 (Bắt đầu)
-        function startTimer() {
-            startTime = new Date();
-            btnStart.disabled = true;
-            btnEnd.disabled = false;
-            resultMessage.innerText = "Đang tính giờ...";
+// ── Service Worker (inline via blob) ─────────────────────────────────────
+if('serviceWorker' in navigator){
+  const swCode = `
+    const CACHE = 'bat-thu-v1';
+    self.addEventListener('install', e => {
+      self.skipWaiting();
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+    });
+  `;
+  const swBlob = new Blob([swCode], {type:'text/javascript'});
+  const swUrl  = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl, {scope: './'}).catch(()=>{});
+}
 
-            // Chạy đồng hồ hiển thị trực tiếp thời gian trôi qua
-            timerInterval = setInterval(() => {
-                const now = new Date();
-                const diffInSeconds = Math.floor((now - startTime) / 1000);
-                liveTimerIndex.innerText = formatTime(diffInSeconds);
-            }, 1000);
-        }
+// ── Game logic ────────────────────────────────────────────────────────────
+const ANIMALS = ['🐱','🐶','🐰','🐼','🐸','🦊','🐨','🐯','🐮','🦋','🐙','🐬','🦄','🐧','🐥','🐿️','🦝','🦙','🦁','🐻','🦌','🐓','🦜','🐠','🦭'];
+const POOP = '💩';
+const MSGS_WIN  = ['Giỏi lắm! 🌟','Tuyệt vời! ✨','Siêu đỉnh! 🎉','Bé giỏi quá! 💖','Wow wow! 🌈','Bắt được rồi! 🥳'];
+const MSGS_POOP = ['Ôi không! 💩','Bẩn tay rồi! 😱','Tránh ra nhé! 🙈','Aww noooo 😅'];
 
-        // Nút 終了 (Kết thúc)
-        function endTimer() {
-            if (!startTime) return;
+let score=0, timeLeft=30, level=1, running=false;
+let interval=null, spawnTimer=null, animals=[], animalId=0;
+let bestScore = parseInt(localStorage.getItem('batThuBest')||'0');
 
-            clearInterval(timerInterval);
-            const endTime = new Date();
-            const diffInSeconds = Math.floor((endTime - startTime) / 1000);
-            
-            // Cập nhật trạng thái nút
-            btnStart.disabled = false;
-            btnEnd.disabled = true;
+function updateBest(){ document.getElementById('best').textContent = bestScore; }
+updateBest();
 
-            // Hiển thị kết quả lần bấm vừa rồi
-            const timeString = formatTime(diffInSeconds);
-            liveTimerIndex.innerText = "00:00:00";
-            resultMessage.innerHTML = `Vừa hoàn thành: <span style="color:var(--danger-color)">${timeString}</span>`;
+function startGame(){
+  score=0; timeLeft=30; level=1; running=true; animals=[];
+  setScore(0);
+  document.getElementById('timer').textContent=30;
+  document.getElementById('level').textContent=1;
+  document.getElementById('timer-fill').style.width='100%';
+  document.getElementById('timer-fill').style.background='#66bb6a';
+  document.getElementById('msg').textContent='';
+  document.getElementById('overlay').style.display='none';
+  document.getElementById('start-btn').textContent='⏹ Đang chơi...';
+  document.getElementById('start-btn').disabled=true;
+  clearAllAnimals();
+  spawnAnimal(); spawnAnimal();
+  clearInterval(interval);
+  interval = setInterval(tick, 1000);
+  scheduleSpawn();
+}
 
-            // Cập nhật Khung 3: Tổng thời gian
-            totalSeconds += diffInSeconds;
-            totalDisplay.innerText = formatTotalTime(totalSeconds);
+function setScore(v){ score=v; document.getElementById('score').textContent=score; }
 
-            // Cập nhật Khung 2: Lịch sử
-            sessionCount++;
-            if (sessionCount === 1) {
-                historyList.innerHTML = ''; // Xóa dòng "Chưa có dữ liệu" khi có lần bấm đầu tiên
-            }
+function scheduleSpawn(){
+  if(!running) return;
+  const delay = Math.max(300, 1000 - level*70);
+  spawnTimer = setTimeout(()=>{ spawnAnimal(); scheduleSpawn(); }, delay);
+}
 
-            const timeStartStr = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const timeEndStr = endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+function tick(){
+  if(!running) return;
+  timeLeft--;
+  document.getElementById('timer').textContent=timeLeft;
+  document.getElementById('timer-fill').style.width=(timeLeft/30*100)+'%';
+  if(timeLeft<=7) document.getElementById('timer-fill').style.background='#ef5350';
+  if(score >= level*8){ level++; document.getElementById('level').textContent=level; }
+  if(timeLeft<=0) endGame();
+}
 
-            const historyItem = document.createElement('div');
-            historyItem.className = 'history-item';
-            historyItem.innerHTML = `
-                <span>Lần ${sessionCount} (${timeStartStr} ➔ ${timeEndStr})</span>
-                <strong>+ ${timeString}</strong>
-            `;
-            // Chèn lịch sử mới lên đầu danh sách
-            historyList.insertBefore(historyItem, historyList.firstChild);
+function spawnAnimal(){
+  if(!running) return;
+  if(animals.length >= 3+level) return;
+  const area = document.getElementById('game-area');
+  const isPoop = Math.random() < (0.12 + level*0.02);
+  const isBig  = !isPoop && Math.random() < 0.35;
+  const emoji  = isPoop ? POOP : ANIMALS[Math.floor(Math.random()*ANIMALS.length)];
+  const sizeClass = isBig ? 'size-big' : 'size-normal';
+  const pts = isPoop ? -2 : (isBig ? 1 : 2);
 
-            // Reset thời gian bắt đầu
-            startTime = null;
-        }
-    </script>
+  const id = 'a'+(animalId++);
+  const el = document.createElement('div');
+  el.className = 'animal '+sizeClass+(isPoop?' poop':'');
+  el.id=id; el.textContent=emoji;
+  el.dataset.pts=pts; el.dataset.isPoop=isPoop?'1':'0';
+
+  const margin = isBig ? 12 : 6;
+  el.style.left = (margin + Math.random()*(100-margin*2))+'%';
+  el.style.top  = (4 + Math.random()*66)+'%';
+
+  const dur = Math.max(1.0, 3.0 - level*0.15);
+  el.style.animationDuration = dur+'s';
+
+  const onCatch = (e) => { e.preventDefault(); e.stopPropagation(); catchAnimal(id,el,emoji,pts,sizeClass,isPoop); };
+  el.addEventListener('touchstart', onCatch, {passive:false});
+  el.addEventListener('mousedown',  onCatch);
+  area.appendChild(el);
+  animals.push(id);
+  setTimeout(()=>{ if(document.getElementById(id)) removeAnimal(id); }, Math.max(1500, dur*1600));
+}
+
+function catchAnimal(id, el, emoji, pts, sizeClass, isPoop){
+  if(!running || !document.getElementById(id)) return;
+  setScore(Math.max(0, score+pts));
+  const msg = isPoop ? MSGS_POOP[Math.floor(Math.random()*MSGS_POOP.length)] : MSGS_WIN[Math.floor(Math.random()*MSGS_WIN.length)];
+  document.getElementById('msg').textContent=msg;
+  setTimeout(()=>{ if(document.getElementById('msg').textContent===msg) document.getElementById('msg').textContent=''; },900);
+  const area = document.getElementById('game-area');
+  const pop=document.createElement('div'); pop.className='pop '+sizeClass; pop.textContent=emoji;
+  pop.style.left=el.style.left; pop.style.top=el.style.top;
+  area.appendChild(pop); setTimeout(()=>{ if(pop.parentNode) pop.parentNode.removeChild(pop); },400);
+  const sp=document.createElement('div'); sp.className='score-pop';
+  sp.style.left=el.style.left; sp.style.top=el.style.top;
+  sp.style.color = pts<0?'#e53935':(pts===1?'#ff9800':'#388e3c');
+  sp.textContent = pts>0?'+'+pts:pts;
+  area.appendChild(sp); setTimeout(()=>{ if(sp.parentNode) sp.parentNode.removeChild(sp); },850);
+  removeAnimal(id);
+}
+
+function removeAnimal(id){
+  const el=document.getElementById(id);
+  if(el && el.parentNode) el.parentNode.removeChild(el);
+  animals=animals.filter(a=>a!==id);
+}
+
+function clearAllAnimals(){ [...animals].forEach(id=>removeAnimal(id)); animals=[]; }
+
+function endGame(){
+  running=false; clearInterval(interval); clearTimeout(spawnTimer); clearAllAnimals();
+  const isNewBest = score>bestScore;
+  if(isNewBest){ bestScore=score; localStorage.setItem('batThuBest',bestScore); updateBest(); }
+  const stars = score>=20?3:score>=10?2:1;
+  const overlay=document.getElementById('overlay');
+  overlay.innerHTML=`
+    <div class="big">${score>=20?'🏆':score>=10?'🎉':'😊'}</div>
+    <div class="title">Bé bắt được <b>${score}</b> điểm!</div>
+    <div class="star">${'⭐'.repeat(stars)}</div>
+    ${isNewBest?'<div class="best-line">🏅 Kỷ lục mới! Tuyệt vời!</div>':`<div class="best-line">🏅 Kỷ lục: ${bestScore} điểm</div>`}
+    <div class="sub">${score>=20?'Xuất sắc! Bé siêu giỏi! 🥳':score>=10?'Rất tốt! Chơi nữa đi! 🌟':'Cố lên! Bé làm được mà! 💪'}</div>`;
+  overlay.style.display='flex';
+  document.getElementById('start-btn').textContent='🔄 Chơi lại!';
+  document.getElementById('start-btn').disabled=false;
+  document.getElementById('timer-fill').style.background='#66bb6a';
+  document.getElementById('timer-fill').style.width='100%';
+}
+</script>
 </body>
 </html>
